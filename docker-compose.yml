@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_DATABASE: clubsync
+      MYSQL_USER: clubsync
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - my_data:/var/lib/mysql
+
+  clubsync:
+    depends_on:
+      - mysql
+    build: .
+    restart: always
+    environment:
+      DB_HOST: mysql
+      DB_NAME: clubsync
+      DB_USER: clubsync
+      DB_PASS: pass
+      CRON_SCHEDULE: "* * * * *"
+      CLUBHOUSE_API_TOKEN: "${CLUBHOUSE_API_TOKEN}"
+
+volumes:
+  my_data: {}
