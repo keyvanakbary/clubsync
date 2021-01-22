@@ -1,7 +1,7 @@
 defmodule Clubhousex do
   use Tesla
 
-  adapter(Tesla.Adapter.Hackney, recv_timeout: 30_000)
+  adapter(Tesla.Adapter.Hackney, recv_timeout: 90_000)
 
   plug(Tesla.Middleware.JSON)
   plug(Tesla.Middleware.BaseUrl, "https://api.clubhouse.io/api/v3")
